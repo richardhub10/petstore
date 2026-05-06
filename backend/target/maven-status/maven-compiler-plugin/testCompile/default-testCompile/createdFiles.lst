@@ -1,0 +1,3 @@
+com\petstore\PetstoreApplicationTests.class
+com\petstore\pet\PetControllerTest.class
+com\petstore\pet\PetServiceTest.class
