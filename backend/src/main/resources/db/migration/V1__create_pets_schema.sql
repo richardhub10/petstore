@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS pets (
 CREATE TABLE IF NOT EXISTS pet_photos (
     id          UUID PRIMARY KEY DEFAULT RANDOM_UUID(),
     pet_id      UUID         NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
-    url         VARCHAR(500) NOT NULL,
+    url         CLOB         NOT NULL,
     is_primary  BOOLEAN      NOT NULL DEFAULT FALSE,
     sort_order  INTEGER      NOT NULL DEFAULT 0
 );
