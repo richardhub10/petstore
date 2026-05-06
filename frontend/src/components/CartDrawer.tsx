@@ -87,7 +87,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                       />
                       <Box className="flex items-center justify-between">
                         <Typography variant="caption" color="text.secondary">
-                          ${item.price.toFixed(2)} each
+                          ₱${item.price.toFixed(2)} each
                         </Typography>
                         <Box className="flex items-center gap-1">
                           <IconButton
@@ -123,7 +123,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
               <Box className="flex justify-between">
                 <Typography variant="subtitle1" className="font-semibold">Subtotal</Typography>
                 <Typography variant="subtitle1" className="font-bold text-green-700">
-                  ${subtotal.toFixed(2)}
+                  ₱${subtotal.toFixed(2)}
                 </Typography>
               </Box>
               <Button

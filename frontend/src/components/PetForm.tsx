@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CreatePetRequest, Photo } from '../api/petsApi'
+import { CreatePetRequest } from '../api/petsApi'
 import {
   Button,
   TextField,
@@ -11,7 +11,6 @@ import {
   Switch,
   FormControlLabel,
   Card,
-  CardContent,
   Typography,
   Stack,
   CircularProgress,

@@ -236,7 +236,7 @@ export default function AdminPage() {
                     </TableCell>
                     <TableCell>{pet.breed}</TableCell>
                     <TableCell>{pet.ageMonths}</TableCell>
-                    <TableCell>{pet.price != null ? `$${pet.price}` : '—'}</TableCell>
+                    <TableCell>{pet.price != null ? `₱${pet.price}` : '—'}</TableCell>
                     <TableCell>
                       <Chip
                         label={pet.available ? 'Yes' : 'No'}

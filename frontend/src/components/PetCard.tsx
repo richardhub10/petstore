@@ -1,10 +1,15 @@
-import { Card, CardMedia, CardContent, Typography, Chip, Button } from '@mui/material'
+import { Card, CardMedia, CardContent, Typography, Chip, Button, IconButton, Box } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 import { PetSummary } from '../api/petsApi'
 import { useCart } from '../context/CartContext'
 
 interface PetCardProps {
   pet: PetSummary
+  onEdit?: (pet: PetSummary) => void
+  onDelete?: (petId: string) => void
+  showAdminActions?: boolean
 }
 
 const PLACEHOLDER = '/placeholder-pet.svg'
@@ -23,7 +28,7 @@ const categoryEmoji: Record<string, string> = {
   FISH: '🐟',
 }
 
-export default function PetCard({ pet }: PetCardProps) {
+export default function PetCard({ pet, onEdit, onDelete, showAdminActions = false }: PetCardProps) {
   const navigate = useNavigate()
   const { addItem } = useCart()
 
@@ -61,20 +66,50 @@ export default function PetCard({ pet }: PetCardProps) {
         <div className="flex items-center justify-between mt-auto pt-2">
           {pet.price != null && pet.price > 0 ? (
             <Typography variant="subtitle1" className="font-bold text-green-700">
-              ${pet.price.toFixed(2)}
+              ₱{pet.price.toFixed(2)}
             </Typography>
           ) : (
             <Typography variant="subtitle2" color="text.secondary">Contact us</Typography>
           )}
-          <Button
-            variant="contained"
-            size="small"
-            disabled={!pet.available}
-            onClick={(e) => { e.stopPropagation(); addItem(pet) }}
-            aria-label={pet.available ? `Add ${pet.name} to cart` : `${pet.name} unavailable`}
-          >
-            {pet.available ? 'Add to Cart' : 'Unavailable'}
-          </Button>
+          <Box className="flex gap-1">
+            {showAdminActions && (
+              <>
+                <IconButton
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onEdit?.(pet)
+                  }}
+                  aria-label={`Edit ${pet.name}`}
+                  color="primary"
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onDelete?.(pet.id)
+                  }}
+                  aria-label={`Delete ${pet.name}`}
+                  color="error"
+                >
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </>
+            )}
+            {!showAdminActions && (
+              <Button
+                variant="contained"
+                size="small"
+                disabled={!pet.available}
+                onClick={(e) => { e.stopPropagation(); addItem(pet) }}
+                aria-label={pet.available ? `Add ${pet.name} to cart` : `${pet.name} unavailable`}
+              >
+                {pet.available ? 'Add to Cart' : 'Unavailable'}
+              </Button>
+            )}
+          </Box>
         </div>
       </CardContent>
     </Card>

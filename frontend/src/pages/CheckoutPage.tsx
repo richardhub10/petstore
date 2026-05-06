@@ -100,23 +100,23 @@ export default function CheckoutPage() {
               <Typography variant="caption" color="text.secondary">Qty: {item.quantity}</Typography>
             </Box>
             <Typography variant="body2" className="font-semibold whitespace-nowrap">
-              ${(item.price * item.quantity).toFixed(2)}
+              ₱${(item.price * item.quantity).toFixed(2)}
             </Typography>
           </Box>
         ))}
         <Divider />
         <Box className="flex justify-between">
           <Typography variant="body2">Subtotal</Typography>
-          <Typography variant="body2">${subtotal.toFixed(2)}</Typography>
+          <Typography variant="body2">₱${subtotal.toFixed(2)}</Typography>
         </Box>
         <Box className="flex justify-between">
-          <Typography variant="body2">Tax (8%)</Typography>
-          <Typography variant="body2">${tax.toFixed(2)}</Typography>
+          <Typography variant="body2">Tax:</Typography>
+          <Typography variant="body2">₱${tax.toFixed(2)}</Typography>
         </Box>
         <Divider />
         <Box className="flex justify-between">
           <Typography variant="subtitle1" className="font-bold">Total</Typography>
-          <Typography variant="subtitle1" className="font-bold text-green-700">${total.toFixed(2)}</Typography>
+          <Typography variant="subtitle1" className="font-bold text-green-700">₱${total.toFixed(2)}</Typography>
         </Box>
         <Box sx={{ display: { xs: 'block', md: 'none' } }}>
           <Button variant="contained" fullWidth size="large" disabled>

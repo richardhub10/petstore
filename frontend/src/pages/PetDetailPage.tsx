@@ -21,7 +21,7 @@ const categoryEmoji: Record<string, string> = {
 
 function formatPrice(price: number | null): string | null {
   if (price == null || price === 0) return null
-  return `$${price.toFixed(2)}`
+  return `₱${price.toFixed(2)}`
 }
 
 export default function PetDetailPage() {
