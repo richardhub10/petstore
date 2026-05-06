@@ -11,7 +11,7 @@ import EmptyState from '../components/EmptyState'
 import ErrorState from '../components/ErrorState'
 import CartButton from '../components/CartButton'
 import PetForm from '../components/PetForm'
-import { createPet, CreatePetRequest, updatePet, deletePet, PetSummary } from '../api/petsApi'
+import { createPet, CreatePetRequest, updatePet, deletePet, getPetById, PetSummary } from '../api/petsApi'
 
 export default function CataloguePage() {
   const queryClient = useQueryClient()
@@ -19,6 +19,8 @@ export default function CataloguePage() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogMode, setDialogMode] = useState<'add' | 'edit'>('add')
   const [editingPet, setEditingPet] = useState<PetSummary | null>(null)
+  const [editingPetData, setEditingPetData] = useState<CreatePetRequest | null>(null)
+  const [isFetchingPetDetails, setIsFetchingPetDetails] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false)
   const [petToDelete, setPetToDelete] = useState<string | null>(null)
@@ -78,15 +80,35 @@ export default function CataloguePage() {
   const handleAddAnimal = () => {
     setDialogMode('add')
     setEditingPet(null)
+    setEditingPetData(null)
     setSubmitError(null)
     setDialogOpen(true)
   }
 
-  const handleEditPet = (pet: PetSummary) => {
+  const handleEditPet = async (pet: PetSummary) => {
     setDialogMode('edit')
     setEditingPet(pet)
     setSubmitError(null)
-    setDialogOpen(true)
+    setIsFetchingPetDetails(true)
+
+    try {
+      const petDetail = await getPetById(pet.id)
+      setEditingPetData({
+        name: petDetail.name,
+        category: petDetail.category,
+        breed: petDetail.breed,
+        ageMonths: petDetail.ageMonths,
+        description: petDetail.description,
+        price: petDetail.price,
+        available: petDetail.available,
+        photos: petDetail.photos.map((photo) => ({ url: photo.url, isPrimary: photo.isPrimary })),
+      })
+      setDialogOpen(true)
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Failed to load pet details')
+    } finally {
+      setIsFetchingPetDetails(false)
+    }
   }
 
   const handleDeletePet = (petId: string) => {
@@ -187,18 +209,9 @@ export default function CataloguePage() {
         <DialogContent sx={{ pt: 2 }}>
           {submitError && <Alert severity="error" sx={{ mb: 2 }}>{submitError}</Alert>}
           <PetForm
-            initialData={editingPet ? {
-              name: editingPet.name,
-              category: editingPet.category,
-              breed: editingPet.breed,
-              ageMonths: editingPet.ageMonths,
-              description: '',
-              price: editingPet.price,
-              available: editingPet.available,
-              photos: [],
-            } : undefined}
+            initialData={dialogMode === 'edit' ? editingPetData ?? undefined : undefined}
             onSubmit={handleSubmitForm}
-            isLoading={dialogMode === 'add' ? createMutation.isPending : updateMutation.isPending}
+            isLoading={dialogMode === 'add' ? createMutation.isPending : updateMutation.isPending || isFetchingPetDetails}
             submitButtonText={dialogMode === 'add' ? 'Add Animal' : 'Save Changes'}
           />
         </DialogContent>
