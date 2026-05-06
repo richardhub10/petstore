@@ -34,17 +34,18 @@ export default function PetCard({ pet, onEdit, onDelete, showAdminActions = fals
 
   return (
     <Card
-      className="flex flex-col h-full cursor-pointer hover:shadow-lg transition-shadow duration-200"
+      className="pet-card flex flex-col h-full cursor-pointer"
       onClick={() => navigate(`/pets/${pet.id}`)}
       role="article"
       aria-label={pet.name}
+      elevation={0}
     >
       <CardMedia
         component="img"
         height="200"
         image={pet.primaryPhotoUrl ?? PLACEHOLDER}
         alt={pet.name}
-        className="object-cover h-48"
+        className="pet-card-image object-cover h-48"
         onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER }}
       />
       <CardContent className="flex flex-col flex-1 gap-2">

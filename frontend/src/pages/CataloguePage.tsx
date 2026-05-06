@@ -132,8 +132,8 @@ export default function CataloguePage() {
 
   return (
     <>
-      <AppBar position="static" color="primary" elevation={1}>
-        <Toolbar>
+      <AppBar position="static" elevation={0} sx={{ backgroundColor: 'rgba(255,255,255,0.92)' }}>
+        <Toolbar sx={{ minHeight: 72 }}>
           <Typography variant="h6" className="font-bold tracking-wide" sx={{ flexGrow: 1 }}>
             🐾 Petstore
           </Typography>
@@ -142,22 +142,27 @@ export default function CataloguePage() {
             color="success"
             startIcon={<AddIcon />}
             onClick={handleAddAnimal}
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, boxShadow: 'none' }}
           >
             Add Animal
           </Button>
           <CartButton />
         </Toolbar>
       </AppBar>
-      <Container maxWidth="xl" className="py-8">
+      <Container maxWidth="xl" className="py-8 page-shell">
         <Box className="flex flex-col gap-6">
-          <Box>
-            <Typography variant="h4" component="h1" className="font-bold mb-1">
-              Find Your Perfect Pet
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              Browse our selection of dogs, cats, birds, and fish.
-            </Typography>
+          <Box className="hero-banner">
+            <Box className="hero-banner-inner">
+              <Typography variant="overline" color="primary" sx={{ fontWeight: 700, letterSpacing: '0.18em' }}>
+                Pet Adoption Marketplace
+              </Typography>
+              <Typography variant="h3" component="h1" className="hero-heading font-bold mt-4">
+                Find Your Perfect Pet
+              </Typography>
+              <Typography variant="body1" color="text.secondary" className="hero-subtitle mt-3">
+                Browse friendly dogs, cats, birds, and fish with updated care details, easy checkout, and secure adoption support.
+              </Typography>
+            </Box>
           </Box>
 
           <CategoryFilter />
