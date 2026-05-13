@@ -15,8 +15,7 @@ public class PetPhoto {
     @JoinColumn(name = "pet_id", nullable = false)
     private Pet pet;
 
-    @Lob
-    @Column(nullable = false, columnDefinition = "CLOB")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String url;
 
     @Column(name = "is_primary", nullable = false)
