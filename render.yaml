@@ -14,7 +14,6 @@ services:
     name: petstore-frontend
     env: static
     branch: master
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    publishPath: dist
+    buildCommand: cd frontend && npm install && npm run build
+    publishPath: frontend/dist
     plan: free
