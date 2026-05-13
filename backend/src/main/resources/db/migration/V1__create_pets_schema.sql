@@ -1,7 +1,5 @@
--- H2 has built-in UUID support, no extension needed
-
 CREATE TABLE IF NOT EXISTS pets (
-    id          UUID PRIMARY KEY DEFAULT RANDOM_UUID(),
+    id          UUID PRIMARY KEY,
     name        VARCHAR(100)      NOT NULL,
     category    VARCHAR(10)       NOT NULL
                     CONSTRAINT chk_category CHECK (category IN ('DOG','CAT','BIRD','FISH')),
@@ -10,13 +8,13 @@ CREATE TABLE IF NOT EXISTS pets (
     description TEXT              NOT NULL,
     price       NUMERIC(10,2),
     available   BOOLEAN           NOT NULL DEFAULT TRUE,
-    created_at  TIMESTAMP         NOT NULL DEFAULT CURRENT_TIMESTAMP()
+    created_at  TIMESTAMP         NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS pet_photos (
-    id          UUID PRIMARY KEY DEFAULT RANDOM_UUID(),
+    id          UUID PRIMARY KEY,
     pet_id      UUID         NOT NULL REFERENCES pets(id) ON DELETE CASCADE,
-    url         CLOB         NOT NULL,
+    url         TEXT         NOT NULL,
     is_primary  BOOLEAN      NOT NULL DEFAULT FALSE,
     sort_order  INTEGER      NOT NULL DEFAULT 0
 );
