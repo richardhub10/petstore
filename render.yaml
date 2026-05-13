@@ -3,7 +3,8 @@ services:
     name: petstore-backend
     env: docker
     branch: master
-    dockerfilePath: backend/Dockerfile
+    rootDir: backend
+    dockerfilePath: Dockerfile
     plan: free
     envVars:
       - key: PORT
@@ -13,6 +14,7 @@ services:
     name: petstore-frontend
     env: static
     branch: master
-    buildCommand: cd frontend && npm install && npm run build
-    publishPath: frontend/dist
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
     plan: free
